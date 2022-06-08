@@ -9,6 +9,7 @@ void NavigateAndFinsh({
         context, MaterialPageRoute(builder: (context) => screen));
 
 Widget deaFaultFormField({
+  required Function onSubmit,
   required TextEditingController controller,
   required TextInputType type,
   required Function validate,
@@ -16,23 +17,34 @@ Widget deaFaultFormField({
   required IconData prefixIcon,
   IconData? suffixIcon,
   Function? sufixpress,
+  bool isPassword = false,
+  required Function suffixPress,
 }) =>
     TextFormField(
+      onFieldSubmitted: onSubmit(),
+      obscureText: isPassword,
       controller: controller,
       keyboardType: type,
       validator: (value) {
         return validate(value);
       },
       decoration: InputDecoration(
-        suffixIcon: Icon(suffixIcon),
+        suffixIcon: suffixIcon != null
+            ? IconButton(
+                icon: Icon(suffixIcon),
+                onPressed: () {},
+              )
+            : null,
         border: const OutlineInputBorder(),
         label: Text(label),
         prefixIcon: Icon(prefixIcon),
       ),
-      onTap: sufixpress != null ? sufixpress() : null,
     );
 
-Widget dafaultButton({required String text, required Function onpressed}) =>
+Widget dafaultButton({
+  required String text,
+  required Function onpressed,
+}) =>
     Container(
       color: defaultColor,
       width: double.infinity,
@@ -56,6 +68,26 @@ Widget deafaultTextButton({
         text.toUpperCase(),
         style: TextStyle(
           color: defaultColor,
+        ),
+      ),
+    );
+
+Widget defaultButton({
+  required String text,
+  double width = double.infinity,
+  required Color background,
+  required Function? function,
+}) =>
+    Container(
+      color: background,
+      width: width,
+      child: MaterialButton(
+        onPressed: function!(),
+        child: Text(
+          text.toUpperCase(),
+          style: TextStyle(
+            color: Colors.white,
+          ),
         ),
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shop/modules/login/login_screen.dart';
+import 'package:shop/modules/layout/shop_layout.dart';
+import 'package:shop/shared/local/cache_helper.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../components/reuseable.dart';
@@ -43,6 +44,14 @@ class OnBoardScreen extends StatefulWidget {
 }
 
 class _OnBoardScreenState extends State<OnBoardScreen> {
+  void submit() {
+    CacheHelper.saveData(key: 'onBoarding', value: true).then((value) {
+      if (value) {
+        NavigateAndFinsh(context: context, screen: ShopLayout());
+      }
+    });
+  }
+
   var boardController = PageController();
   bool isLast = false;
   @override
@@ -51,10 +60,8 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
       appBar: AppBar(
         actions: [
           TextButton(
-            onPressed: () {
-              NavigateAndFinsh(context: context, screen: Login_Screen());
-            },
-            child: Text(
+            onPressed: submit,
+            child: const Text(
               'SKIP',
               style: TextStyle(
                 fontSize: 20.0,
@@ -91,7 +98,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                 SmoothPageIndicator(
                   controller: boardController,
                   count: PageViewList.length,
-                  effect: ExpandingDotsEffect(
+                  effect: const ExpandingDotsEffect(
                     dotColor: Colors.grey,
                     expansionFactor: 4,
                     activeDotColor: defaultColor,
@@ -100,20 +107,19 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                     dotHeight: 10.0,
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 FloatingActionButton(
                   onPressed: () {
                     if (isLast == true) {
-                      NavigateAndFinsh(
-                          context: context, screen: Login_Screen());
+                      submit();
                     } else {
                       boardController.nextPage(
-                        duration: Duration(microseconds: 750),
+                        duration: const Duration(microseconds: 750),
                         curve: Curves.bounceOut,
                       );
                     }
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.arrow_forward_ios,
                   ),
                 )
@@ -136,21 +142,21 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10.0,
           ),
           Text(
             '${model.title}',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 35.0,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10.0,
           ),
           Text(
             '${model.body}',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18.0,
             ),
           ),
