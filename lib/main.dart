@@ -13,13 +13,15 @@ import 'modules/on_board_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await CacheHelper.init();
+
   Widget? widget;
   bool? onBoarding = CacheHelper.getData(key: 'onBoarding');
-  String token = CacheHelper.getData(key: 'token');
+  String? token = CacheHelper.getData(key: 'token');
 
   if (onBoarding != null) {
     if (token != null)
-      widget = const ShopLayout();
+      widget = ShopLayout();
     else
       widget = Login_Screen();
   } else {
@@ -32,13 +34,10 @@ void main() async {
     )),
     blocObserver: MyBlocObserver(),
   );
-  DioHelper.init();
-  await CacheHelper.init();
+
   HttpOverrides.global = MyHttpOverrides();
-
+  DioHelper.init();
 //  bool isDark = CacheHelper.getData(key: 'isDark');
-
-  print((onBoarding));
 }
 
 class MyApp extends StatelessWidget {

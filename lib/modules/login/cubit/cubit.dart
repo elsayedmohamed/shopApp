@@ -44,8 +44,9 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
 
   void changeSuffixVisibilty() {
     isPassword = !isPassword;
-    emit(ShopLoginPasswordVisibiltyState());
+
     suffix =
         isPassword ? Icons.visibility_off_outlined : Icons.visibility_outlined;
+    emit(ShopLoginPasswordVisibiltyState());
   }
 }

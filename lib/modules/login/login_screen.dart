@@ -1,6 +1,7 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop/modules/layout/shop_layout.dart';
 import 'package:shop/modules/login/cubit/cubit.dart';
 import 'package:shop/modules/login/cubit/states.dart';
 import 'package:shop/shared/local/cache_helper.dart';
@@ -25,7 +26,13 @@ class Login_Screen extends StatelessWidget {
               print(state.loginModel.data!.token);
 
               CacheHelper.saveData(
-                  key: 'token', value: state.loginModel.data!.token);
+                      key: 'token', value: state.loginModel.data!.token)
+                  .then((value) {
+                if (value) {
+                  print(value);
+                  NavigateAndFinsh(context: context, screen: ShopLayout());
+                }
+              });
 
               final snackBar = SnackBar(
                 shape: StadiumBorder(),
@@ -78,12 +85,12 @@ class Login_Screen extends StatelessWidget {
           return Scaffold(
               appBar: AppBar(
                 actions: [
-                  deafaultTextButton(
-                      onpressed: () {
-                        // NavigateAndFinsh(
-                        //     context: context, screen: RegisterScreen());
-                      },
-                      text: 'skip'),
+                  // deafaultTextButton(
+                  //     onpressed: () {
+                  //       NavigateAndFinsh(
+                  //           context: context, screen: RegisterScreen());
+                  //     },
+                  //     text: 'skip'),
                 ],
               ),
               body: Center(

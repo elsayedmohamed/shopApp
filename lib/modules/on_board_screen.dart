@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop/modules/layout/shop_layout.dart';
+import 'package:shop/modules/login/login_screen.dart';
 import 'package:shop/shared/local/cache_helper.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -46,8 +46,9 @@ class OnBoardScreen extends StatefulWidget {
 class _OnBoardScreenState extends State<OnBoardScreen> {
   void submit() {
     CacheHelper.saveData(key: 'onBoarding', value: true).then((value) {
-      if (value) {
-        NavigateAndFinsh(context: context, screen: ShopLayout());
+      if (value == true) {
+        NavigateAndFinsh(context: context, screen: Login_Screen());
+        print(value);
       }
     });
   }

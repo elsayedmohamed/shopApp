@@ -10,13 +10,19 @@ class ShopLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sallah'),
+        title: Text(
+          'Sallah',
+          style: Theme.of(context).textTheme.headline4,
+        ),
       ),
       body: TextButton(
           child: const Text('LogOut'),
           onPressed: () {
-            CacheHelper.removeData(key: 'onBoarding');
-            NavigateAndFinsh(context: context, screen: Login_Screen());
+            CacheHelper.removeData(key: 'token').then((value) {
+              if (value) {
+                NavigateAndFinsh(context: context, screen: Login_Screen());
+              }
+            });
           }),
     );
   }
