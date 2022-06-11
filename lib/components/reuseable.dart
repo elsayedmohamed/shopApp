@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop/styles/constant.dart';
 
 void NavigateAndFinsh({
@@ -8,6 +9,11 @@ void NavigateAndFinsh({
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => screen));
 
+void NavigateTo({required BuildContext context, required Widget screen}) {
+  Navigator.pushReplacement(
+      context, MaterialPageRoute(builder: (context) => screen));
+}
+
 Widget deaFaultFormField({
   required Function onSubmit,
   required TextEditingController controller,
@@ -16,9 +22,9 @@ Widget deaFaultFormField({
   required String label,
   required IconData prefixIcon,
   IconData? suffixIcon,
-  Function? sufixpress,
+  // Function? sufixpress,
   bool isPassword = false,
-  required Function suffixPress,
+  Function? suffixPress,
 }) =>
     TextFormField(
       onFieldSubmitted: onSubmit(),
@@ -32,7 +38,7 @@ Widget deaFaultFormField({
         suffixIcon: suffixIcon != null
             ? IconButton(
                 icon: Icon(suffixIcon),
-                onPressed: () {},
+                onPressed: suffixPress!(),
               )
             : null,
         border: const OutlineInputBorder(),
@@ -53,7 +59,7 @@ Widget dafaultButton({
         onPressed: onpressed(),
         child: Text(
           text,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
       ),
     );
@@ -66,7 +72,7 @@ Widget deafaultTextButton({
       onPressed: onpressed(),
       child: Text(
         text.toUpperCase(),
-        style: TextStyle(
+        style: const TextStyle(
           color: defaultColor,
         ),
       ),
@@ -85,9 +91,43 @@ Widget defaultButton({
         onPressed: function!(),
         child: Text(
           text.toUpperCase(),
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
           ),
         ),
       ),
     );
+
+enum ToastStates { SUCCESS, ERROR, WARNING }
+
+void ShowToast({
+  required String msg,
+  required ToastStates state,
+}) {
+  Fluttertoast.showToast(
+      msg: msg,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1,
+      backgroundColor: chooseToastColor(state),
+      textColor: Colors.white,
+      fontSize: 16.0);
+}
+
+Color? chooseToastColor(ToastStates state) {
+  Color? color;
+  switch (state) {
+    case ToastStates.SUCCESS:
+      color = Colors.green;
+      break;
+    case ToastStates.ERROR:
+      color = Colors.red;
+
+      break;
+    case ToastStates.WARNING:
+      return color = Colors.amber;
+
+      break;
+  }
+  return color;
+}

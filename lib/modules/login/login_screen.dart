@@ -1,7 +1,7 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop/modules/layout/shop_layout.dart';
+import 'package:shop/modules/layout/shop_app/shop_layout.dart';
 import 'package:shop/modules/login/cubit/cubit.dart';
 import 'package:shop/modules/login/cubit/states.dart';
 import 'package:shop/shared/local/cache_helper.dart';
@@ -22,61 +22,20 @@ class Login_Screen extends StatelessWidget {
         listener: (context, state) {
           if (state is ShopLoginSucessState) {
             if (state.loginModel.status!) {
-              print(state.loginModel.message);
-              print(state.loginModel.data!.token);
-
               CacheHelper.saveData(
                       key: 'token', value: state.loginModel.data!.token)
                   .then((value) {
                 if (value) {
-                  print(value);
                   NavigateAndFinsh(context: context, screen: ShopLayout());
                 }
               });
 
-              final snackBar = SnackBar(
-                shape: StadiumBorder(),
-                padding: const EdgeInsets.all(20.0),
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                behavior: SnackBarBehavior.floating,
-                backgroundColor: Colors.green,
-                width: 300.0,
-                elevation: 0,
-                content: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Expanded(
-                    child: Text(
-                      '${state.loginModel.message},',
-                      style: const TextStyle(
-                        fontSize: 15.0,
-                        textBaseline: TextBaseline.alphabetic,
-                      ),
-                    ),
-                  ),
-                ),
-              );
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              ShowToast(
+                  msg: '${state.loginModel.message}',
+                  state: ToastStates.SUCCESS);
             } else {
-              final snackBar = SnackBar(
-                shape: StadiumBorder(),
-                behavior: SnackBarBehavior.floating,
-                backgroundColor: Colors.red,
-                width: 300,
-                elevation: 0.0,
-                content: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Expanded(
-                    child: Text(
-                      '${state.loginModel.message},',
-                      style: const TextStyle(
-                        fontSize: 15.0,
-                        textBaseline: TextBaseline.alphabetic,
-                      ),
-                    ),
-                  ),
-                ),
-              );
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              ShowToast(
+                  msg: '${state.loginModel.message}', state: ToastStates.ERROR);
             }
           }
           // TODO: implement listener
@@ -120,7 +79,7 @@ class Login_Screen extends StatelessWidget {
                             height: 10.0,
                           ),
                           deaFaultFormField(
-                            suffixPress: () {},
+                            // suffixPress: () {},
                             onSubmit: () {},
                             controller: emailController,
                             type: TextInputType.emailAddress,
@@ -136,12 +95,13 @@ class Login_Screen extends StatelessWidget {
                             height: 10.0,
                           ),
                           deaFaultFormField(
+                            suffixIcon: ShopLoginCubit.get(context).suffix,
+                            isPassword: ShopLoginCubit.get(context).isPassword,
                             suffixPress: () {
                               ShopLoginCubit.get(context)
                                   .changeSuffixVisibilty();
                             },
                             onSubmit: () {},
-                            isPassword: ShopLoginCubit.get(context).isPassword,
                             controller: passwordController,
                             type: TextInputType.text,
                             validate: (value) {
@@ -151,7 +111,6 @@ class Login_Screen extends StatelessWidget {
                             },
                             label: 'Password',
                             prefixIcon: Icons.lock,
-                            suffixIcon: ShopLoginCubit.get(context).suffix,
                           ),
                           const SizedBox(
                             height: 10.0,
@@ -218,3 +177,24 @@ class Login_Screen extends StatelessWidget {
 // },
 // child: Text('login')),
 // )
+
+// final snackBar = SnackBar(
+//   shape: StadiumBorder(),
+//   behavior: SnackBarBehavior.floating,
+//   backgroundColor: Colors.red,
+//   width: 300,
+//   elevation: 0.0,
+//   content: Padding(
+//     padding: const EdgeInsets.all(20.0),
+//     child: Expanded(
+//       child: Text(
+//         '${state.loginModel.message},',
+//         style: const TextStyle(
+//           fontSize: 15.0,
+//           textBaseline: TextBaseline.alphabetic,
+//         ),
+//       ),
+//     ),
+//   ),
+// );
+// ScaffoldMessenger.of(context).showSnackBar(snackBar);
