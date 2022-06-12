@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop/modules/login/cubit/states.dart';
-import 'package:shop/shared/network/dio_helper.dart';
-import 'package:shop/shared/network/end_point/end_point.dart';
+import 'package:shop/shared/network/remote/dio_helper.dart';
+import 'package:shop/shared/network/remote/end_point.dart';
 
 import '../../../models/shoplogin_model.dart';
 

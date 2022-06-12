@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop/modules/layout/shop_app/shop_layout.dart';
 import 'package:shop/modules/login/cubit/cubit.dart';
 import 'package:shop/modules/login/cubit/states.dart';
-import 'package:shop/shared/local/cache_helper.dart';
 
-import '../../components/reuseable.dart';
+import '../../shared/components/reuseable.dart';
+import '../../shared/network/local/cache_helper.dart';
 
 class Login_Screen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();

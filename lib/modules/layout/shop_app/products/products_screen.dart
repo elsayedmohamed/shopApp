@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop/models/categories_model.dart';
 import 'package:shop/modules/layout/cubit/cubit.dart';
 import 'package:shop/styles/constant.dart';
 
@@ -17,17 +18,21 @@ class ProductsScreen extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           return ConditionalBuilder(
-              condition: ShopCubit.get(context).homeModel != null,
-              builder: (context) =>
-                  productsBuilder(ShopCubit.get(context).homeModel),
+              condition: ShopCubit.get(context).homeModel != null &&
+                  ShopCubit.get(context).categoriesModel != null,
+              builder: (context) => productsBuilder(
+                  ShopCubit.get(context).homeModel,
+                  ShopCubit.get(context).categoriesModel),
               fallback: (context) =>
-                  Center(child: CircularProgressIndicator()));
+                  const Center(child: CircularProgressIndicator()));
         });
   }
 
-  Widget productsBuilder(HomeModel? model) => SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+  Widget productsBuilder(HomeModel? model, CategoriesModel? categoriesModel) =>
+      SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CarouselSlider(
               items: model!.data!.banners
@@ -45,15 +50,60 @@ class ProductsScreen extends StatelessWidget {
                 enableInfiniteScroll: true,
                 reverse: false,
                 autoPlay: true,
-                autoPlayInterval: Duration(seconds: 3),
-                autoPlayAnimationDuration: Duration(seconds: 1),
+                autoPlayInterval: const Duration(seconds: 3),
+                autoPlayAnimationDuration: const Duration(seconds: 1),
                 autoPlayCurve: Curves.fastLinearToSlowEaseIn,
                 scrollDirection: Axis.horizontal,
                 viewportFraction: 1.0,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Builder(builder: (context) {
+                    return Text(
+                      'Categories',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline5
+                          ?.copyWith(fontWeight: FontWeight.w800),
+                    );
+                  }),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  Container(
+                    height: 100.0,
+                    child: ListView.separated(
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) =>
+                          categoryItem(categoriesModel!.data!.data[index]),
+                      separatorBuilder: (context, index) => const SizedBox(
+                        width: 10.0,
+                      ),
+                      itemCount: categoriesModel!.data!.data.length,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  Builder(builder: (context) {
+                    return Text(
+                      'New Products',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline5
+                          ?.copyWith(fontWeight: FontWeight.w800),
+                    );
+                  }),
+                ],
+              ),
             ),
             Container(
               color: Colors.grey[300],
@@ -62,7 +112,7 @@ class ProductsScreen extends StatelessWidget {
                   crossAxisSpacing: 1.0,
                   childAspectRatio: 1 / 1.58,
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   crossAxisCount: 2,
                   children: List.generate(
                     model.data!.products.length,
@@ -73,7 +123,7 @@ class ProductsScreen extends StatelessWidget {
         ),
       );
 
-  Widget buildGridProduct(ProductModel? model) => Container(
+  Widget buildGridProduct(ProductModel model) => Container(
         color: Colors.white,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,15 +132,15 @@ class ProductsScreen extends StatelessWidget {
               alignment: AlignmentDirectional.bottomStart,
               children: [
                 Image(
-                  image: NetworkImage(model!.image!),
+                  image: NetworkImage(model.image!),
                   width: double.infinity,
                   height: 200,
                 ),
                 if (model.discount != 0)
                   Container(
                     color: Colors.red,
-                    padding: EdgeInsets.symmetric(horizontal: 5.0),
-                    child: Text(
+                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                    child: const Text(
                       'DISCOUNT',
                       style: TextStyle(color: Colors.white, fontSize: 8.0),
                     ),
@@ -105,7 +155,7 @@ class ProductsScreen extends StatelessWidget {
                   Text(
                     '${model.name}',
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 14, height: 1.3),
+                    style: const TextStyle(fontSize: 14, height: 1.3),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -133,11 +183,11 @@ class ProductsScreen extends StatelessWidget {
                             color: Colors.grey,
                           ),
                         ),
-                      Spacer(),
+                      const Spacer(),
                       IconButton(
                         padding: EdgeInsets.zero,
                         onPressed: () {},
-                        icon: Icon(Icons.favorite_outline_rounded),
+                        icon: const Icon(Icons.favorite_outline_rounded),
                       ),
                     ],
                   ),
@@ -146,5 +196,30 @@ class ProductsScreen extends StatelessWidget {
             ),
           ],
         ),
+      );
+  Widget categoryItem(DataModel model) => Stack(
+        alignment: AlignmentDirectional.bottomCenter,
+        children: [
+          Image(
+            image: NetworkImage('${model.image}'),
+            height: 100.0,
+            width: 100.0,
+            fit: BoxFit.cover,
+          ),
+          Container(
+            width: 100.0,
+            color: Colors.black.withOpacity(0.8),
+            child: Text(
+              '${model.name}',
+              style: const TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
       );
 }

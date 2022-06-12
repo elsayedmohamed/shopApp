@@ -4,7 +4,7 @@ import 'package:shop/modules/layout/cubit/cubit.dart';
 import 'package:shop/modules/layout/cubit/states.dart';
 import 'package:shop/modules/layout/shop_app/search/search_screen.dart';
 
-import '../../../components/reuseable.dart';
+import '../../../shared/components/reuseable.dart';
 
 class ShopLayout extends StatelessWidget {
   const ShopLayout({Key? key}) : super(key: key);
