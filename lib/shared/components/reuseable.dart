@@ -126,8 +126,6 @@ Color? chooseToastColor(ToastStates state) {
       break;
     case ToastStates.WARNING:
       return color = Colors.amber;
-
-      break;
   }
   return color;
 }
