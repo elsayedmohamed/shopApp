@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop/modules/layout/shop_app/shop_layout.dart';
 import 'package:shop/modules/login/cubit/cubit.dart';
 import 'package:shop/modules/login/cubit/states.dart';
+import 'package:shop/styles/constant.dart';
 
 import '../../shared/components/reuseable.dart';
 import '../../shared/network/local/cache_helper.dart';
@@ -26,7 +27,9 @@ class Login_Screen extends StatelessWidget {
                       key: 'token', value: state.loginModel.data!.token)
                   .then((value) {
                 if (value) {
-                  NavigateAndFinsh(context: context, screen: ShopLayout());
+                  token = state.loginModel.data!.token;
+                  NavigateAndFinsh(
+                      context: context, screen: const ShopLayout());
                 }
               });
 
@@ -148,7 +151,7 @@ class Login_Screen extends StatelessWidget {
                               deafaultTextButton(
                                   onpressed: () {}, text: 'register now'),
                             ],
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -162,39 +165,3 @@ class Login_Screen extends StatelessWidget {
 }
 
 //=====================================================
-
-// Container(
-// height: 50.0,
-// width: double.infinity,
-// child: ElevatedButton(
-// onPressed: () {
-// if (_formKey.currentState!.validate()) {
-// ShopLoginCubit.get(context).userlogIn(
-// email: emailController.text,
-// password: passwordController.text,
-// );
-// }
-// },
-// child: Text('login')),
-// )
-
-// final snackBar = SnackBar(
-//   shape: StadiumBorder(),
-//   behavior: SnackBarBehavior.floating,
-//   backgroundColor: Colors.red,
-//   width: 300,
-//   elevation: 0.0,
-//   content: Padding(
-//     padding: const EdgeInsets.all(20.0),
-//     child: Expanded(
-//       child: Text(
-//         '${state.loginModel.message},',
-//         style: const TextStyle(
-//           fontSize: 15.0,
-//           textBaseline: TextBaseline.alphabetic,
-//         ),
-//       ),
-//     ),
-//   ),
-// );
-// ScaffoldMessenger.of(context).showSnackBar(snackBar);
