@@ -16,7 +16,8 @@ class FavouritesScreen extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         return ConditionalBuilder(
-          condition: state is! ShopLoadingGetFavouriteState,
+          condition: state is! ShopLoadingGetFavouriteState &&
+              ShopLoadingGetFavouriteState != null,
           builder: (context) => ListView.separated(
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) => buildFavItem(
@@ -28,7 +29,8 @@ class FavouritesScreen extends StatelessWidget {
                   ),
               itemCount:
                   ShopCubit.get(context).favoriteModel!.data!.data!.length),
-          fallback: (context) => Center(child: CircularProgressIndicator()),
+          fallback: (context) =>
+              const Center(child: CircularProgressIndicator()),
         );
       },
     );

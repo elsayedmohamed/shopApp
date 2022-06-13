@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop/models/categories_model.dart';
 import 'package:shop/models/favourites_model.dart';
+import 'package:shop/models/shoplogin_model.dart';
 import 'package:shop/modules/layout/cubit/states.dart';
 import 'package:shop/modules/layout/shop_app/categories/categories_screen.dart';
 import 'package:shop/modules/layout/shop_app/favourites/favourites_screen.dart';
@@ -26,7 +27,7 @@ class ShopCubit extends Cubit<ShopStates> {
     const ProductsScreen(),
     const CategoriesScreen(),
     const FavouritesScreen(),
-    const SettingsScreen(),
+    SettingsScreen(),
   ];
 
   void changeBottom(int index) {
@@ -51,8 +52,6 @@ class ShopCubit extends Cubit<ShopStates> {
           element.id!: element.inFavorites!,
         });
       });
-
-      print(favourites);
 
       emit(ShopSuccessHomeDataState());
     }).catchError(((error) {
@@ -84,11 +83,26 @@ class ShopCubit extends Cubit<ShopStates> {
       token: token,
     ).then((value) {
       favoriteModel = FavoriteModel.fromJson(value.data);
-      print(value.data);
       emit(ShopSuccessGetFavouriteState());
     }).catchError(((error) {
       print(error.toString());
       emit(ShopErrorGetFavouriteState());
+    }));
+  }
+
+  //============================================================
+  ShopUserLoginModel? userLoginModel;
+  void getUserData() {
+    emit(ShopLoadingGetFavouriteState());
+    DioHelper.getData(
+      url: PROFILE,
+      token: token,
+    ).then((value) {
+      userLoginModel = ShopUserLoginModel.fromjson(value.data);
+      emit(ShopSuccessUserDataState());
+    }).catchError(((error) {
+      print(error.toString());
+      emit(ShopErrorUserDataState());
     }));
   }
 
@@ -106,7 +120,6 @@ class ShopCubit extends Cubit<ShopStates> {
       token: token,
     ).then((value) {
       changeFavouritesModel = ChangeFavouritesModel.fromjson(value.data);
-      print(value.data);
 
       if (changeFavouritesModel!.status == false) {
         favourites[productId] = !favourites[productId]!;

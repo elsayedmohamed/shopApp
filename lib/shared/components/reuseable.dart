@@ -24,7 +24,7 @@ Widget deaFaultFormField({
   IconData? suffixIcon,
   // Function? sufixpress,
   bool isPassword = false,
-  Function? suffixPress,
+  Function()? suffixPress,
 }) =>
     TextFormField(
       onFieldSubmitted: onSubmit(),
@@ -38,7 +38,7 @@ Widget deaFaultFormField({
         suffixIcon: suffixIcon != null
             ? IconButton(
                 icon: Icon(suffixIcon),
-                onPressed: suffixPress!(),
+                onPressed: suffixPress,
               )
             : null,
         border: const OutlineInputBorder(),
@@ -82,13 +82,13 @@ Widget defaultButton({
   required String text,
   double width = double.infinity,
   required Color background,
-  required Function? function,
+  required Function() function,
 }) =>
     Container(
       color: background,
       width: width,
       child: MaterialButton(
-        onPressed: function!(),
+        onPressed: function,
         child: Text(
           text.toUpperCase(),
           style: const TextStyle(
