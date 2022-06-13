@@ -195,7 +195,7 @@ class ProductsScreen extends StatelessWidget {
                       const Spacer(),
                       IconButton(
                         onPressed: () {
-                          ShopCubit.get(context).cahngeFavourites(model.id!);
+                          ShopCubit.get(context).changeFavourites(model.id!);
                           print(model.id!);
                         },
                         icon: CircleAvatar(

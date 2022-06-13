@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop/models/categories_model.dart';
+import 'package:shop/models/favourites_model.dart';
 import 'package:shop/modules/layout/cubit/states.dart';
 import 'package:shop/modules/layout/shop_app/categories/categories_screen.dart';
 import 'package:shop/modules/layout/shop_app/favourites/favourites_screen.dart';
@@ -61,7 +62,6 @@ class ShopCubit extends Cubit<ShopStates> {
   }
 
   CategoriesModel? categoriesModel;
-
   void getCategories() {
     DioHelper.getData(
       url: GET_CATEGORIES,
@@ -75,9 +75,26 @@ class ShopCubit extends Cubit<ShopStates> {
     }));
   }
 
-  ChangeFavouritesModel? changeFavouritesModel;
+//=====================================
+  FavoriteModel? favoriteModel;
+  void getFavorites() {
+    emit(ShopLoadingGetFavouriteState());
+    DioHelper.getData(
+      url: FAVOURITES,
+      token: token,
+    ).then((value) {
+      favoriteModel = FavoriteModel.fromJson(value.data);
+      print(value.data);
+      emit(ShopSuccessGetFavouriteState());
+    }).catchError(((error) {
+      print(error.toString());
+      emit(ShopErrorGetFavouriteState());
+    }));
+  }
 
-  void cahngeFavourites(int productId) {
+  //============================================================
+  ChangeFavouritesModel? changeFavouritesModel;
+  void changeFavourites(int productId) {
     favourites[productId] = !favourites[productId]!;
     emit(ChangeFavouritesState());
 
@@ -93,6 +110,8 @@ class ShopCubit extends Cubit<ShopStates> {
 
       if (changeFavouritesModel!.status == false) {
         favourites[productId] = !favourites[productId]!;
+      } else {
+        getFavorites();
       }
       emit(ShopSuccessChangeFavouritesState(changeFavouritesModel!));
     }).catchError(
