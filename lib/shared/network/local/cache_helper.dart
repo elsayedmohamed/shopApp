@@ -1,6 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop/modules/login/login_screen.dart';
-import 'package:shop/shared/components/reuseable.dart';
+
+import '../../components/component.dart';
 
 class CacheHelper {
   static SharedPreferences? sharedPreferences;

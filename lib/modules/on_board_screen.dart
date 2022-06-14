@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop/modules/login/login_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../shared/components/reuseable.dart';
+import '../shared/components/component.dart';
 import '../shared/network/local/cache_helper.dart';
 import '../styles/constant.dart';
 

@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop/modules/layout/shop_app/register/cubit/cubit.dart';
 import 'package:shop/modules/layout/shop_app/register/cubit/states.dart';
 
-import '../../../../shared/components/reuseable.dart';
+import '../../../../shared/components/component.dart';
 import '../../../../shared/network/local/cache_helper.dart';
 import '../../../../styles/constant.dart';
 import '../shop_layout.dart';
@@ -77,7 +77,6 @@ class RegisterScreen extends StatelessWidget {
                           ),
                           deaFaultFormField(
                             // suffixPress: () {},
-                            onSubmit: () {},
                             controller: nameController,
                             type: TextInputType.name,
                             validate: (value) {
@@ -93,7 +92,6 @@ class RegisterScreen extends StatelessWidget {
                           ),
                           deaFaultFormField(
                             // suffixPress: () {},
-                            onSubmit: () {},
                             controller: emailController,
                             type: TextInputType.emailAddress,
                             validate: (value) {
@@ -115,7 +113,6 @@ class RegisterScreen extends StatelessWidget {
                               ShopRegisterCubit.get(context)
                                   .changeSuffixVisibilty();
                             },
-                            onSubmit: () {},
                             controller: passwordController,
                             type: TextInputType.text,
                             validate: (value) {
@@ -131,7 +128,6 @@ class RegisterScreen extends StatelessWidget {
                           ),
                           deaFaultFormField(
                             // suffixPress: () {},
-                            onSubmit: () {},
                             controller: phoneController,
                             type: TextInputType.phone,
                             validate: (value) {

@@ -4,7 +4,7 @@ import 'package:shop/modules/layout/cubit/cubit.dart';
 import 'package:shop/modules/layout/cubit/states.dart';
 import 'package:shop/modules/layout/shop_app/search/search_screen.dart';
 
-import '../../../shared/components/reuseable.dart';
+import '../../../shared/components/component.dart';
 
 class ShopLayout extends StatelessWidget {
   const ShopLayout({Key? key}) : super(key: key);
@@ -22,13 +22,13 @@ class ShopLayout extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: () {
-                  NavigateTo(context: context, screen: SearchScreen());
+                  NavigateTo(context: context, screen: const SearchScreen());
                 },
-                icon: Icon(Icons.search),
+                icon: const Icon(Icons.search),
               ),
             ],
             title: Text(
-              'Sallah',
+              'ٍShop App ',
               style: Theme.of(context).textTheme.headline4,
             ),
           ),

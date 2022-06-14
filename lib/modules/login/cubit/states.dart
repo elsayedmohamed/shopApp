@@ -12,10 +12,10 @@ class ShopLoginSucessState extends ShopLoginStates {
   ShopLoginSucessState(this.loginModel);
 }
 
-class ShopLoginPasswordVisibiltyState extends ShopLoginStates {}
-
 class ShopLoginErorrlState extends ShopLoginStates {
   final String error;
 
   ShopLoginErorrlState(this.error);
 }
+
+class ShopLoginPasswordVisibiltyState extends ShopLoginStates {}

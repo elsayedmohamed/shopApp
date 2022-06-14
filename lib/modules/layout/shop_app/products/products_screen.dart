@@ -7,7 +7,7 @@ import 'package:shop/modules/layout/cubit/cubit.dart';
 import 'package:shop/styles/constant.dart';
 
 import '../../../../models/home_models.dart';
-import '../../../../shared/components/reuseable.dart';
+import '../../../../shared/components/component.dart';
 import '../../cubit/states.dart';
 
 class ProductsScreen extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../modules/login/login_screen.dart';
-import '../shared/components/reuseable.dart';
+import '../shared/components/component.dart';
 import '../shared/network/local/cache_helper.dart';
 
 const defaultColor = Colors.blue;

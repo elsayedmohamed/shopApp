@@ -6,7 +6,7 @@ import 'package:shop/modules/login/cubit/cubit.dart';
 import 'package:shop/modules/login/cubit/states.dart';
 import 'package:shop/styles/constant.dart';
 
-import '../../shared/components/reuseable.dart';
+import '../../shared/components/component.dart';
 import '../../shared/network/local/cache_helper.dart';
 import '../layout/shop_app/register/register_screen.dart';
 
@@ -84,7 +84,6 @@ class Login_Screen extends StatelessWidget {
                           ),
                           deaFaultFormField(
                             // suffixPress: () {},
-                            onSubmit: () {},
                             controller: emailController,
                             type: TextInputType.emailAddress,
                             validate: (value) {
@@ -105,7 +104,6 @@ class Login_Screen extends StatelessWidget {
                               ShopLoginCubit.get(context)
                                   .changeSuffixVisibilty();
                             },
-                            onSubmit: () {},
                             controller: passwordController,
                             type: TextInputType.text,
                             validate: (value) {
