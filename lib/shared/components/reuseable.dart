@@ -65,11 +65,11 @@ Widget dafaultButton({
     );
 
 Widget deafaultTextButton({
-  required Function onpressed,
+  required Function() onpressed,
   required String text,
 }) =>
     TextButton(
-      onPressed: onpressed(),
+      onPressed: onpressed,
       child: Text(
         text.toUpperCase(),
         style: const TextStyle(

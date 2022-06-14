@@ -8,6 +8,7 @@ import 'package:shop/styles/constant.dart';
 
 import '../../shared/components/reuseable.dart';
 import '../../shared/network/local/cache_helper.dart';
+import '../layout/shop_app/register/register_screen.dart';
 
 class Login_Screen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -46,7 +47,7 @@ class Login_Screen extends StatelessWidget {
         builder: (context, state) {
           return Scaffold(
               appBar: AppBar(
-                actions: [
+                actions: const [
                   // deafaultTextButton(
                   //     onpressed: () {
                   //       NavigateAndFinsh(
@@ -149,7 +150,12 @@ class Login_Screen extends StatelessWidget {
                                 style: Theme.of(context).textTheme.bodySmall,
                               ),
                               deafaultTextButton(
-                                  onpressed: () {}, text: 'register now'),
+                                  onpressed: () {
+                                    NavigateTo(
+                                        context: context,
+                                        screen: RegisterScreen());
+                                  },
+                                  text: 'register now'),
                             ],
                           ),
                         ],
